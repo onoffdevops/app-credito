@@ -63,7 +63,7 @@ class SocialAuthController extends Controller
     {
         Auth::login($user);
 
-        return redirect()->to('/');
+        return redirect()->to('/home');
     }
 
 }
