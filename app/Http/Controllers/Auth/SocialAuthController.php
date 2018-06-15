@@ -15,7 +15,10 @@ class SocialAuthController extends Controller
     {
 
       $scopes = [];
-      $scopesFacebook = ['user_gender'];
+      $scopesFacebook = [
+        'user_location','user_age_range','user_birthday','email','user_gender','user_hometown',
+        'user_link',
+      ];
       $scopesGoogle = [];
 
       if (strtoupper($provider) == 'FACEBOOK'){
@@ -38,11 +41,6 @@ class SocialAuthController extends Controller
             return $this->authAndRedirect($user); // Login y redirección
         } else {
             // En caso de que no exista creamos un nuevo usuario con sus datos.
-            $userGender = "";
-
-            if(isset($social_user->user['gender'])){
-              $userGender = $social_user->user['gender'];
-            }
 
             $user = User::create([
                 'name' => $social_user->name,
@@ -50,8 +48,8 @@ class SocialAuthController extends Controller
                 'provider' => $provider,
                 'provider_id' => $social_user->getId(),
                 'avatar' => $social_user->avatar,
-                'gender' => $userGender,
-            ]);
+                'social_media_data' => json_encode($social_user->user),
+            ]);          
 
             return $this->authAndRedirect($user); // Login y redirección
         }

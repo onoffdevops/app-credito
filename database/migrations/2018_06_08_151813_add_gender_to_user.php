@@ -26,7 +26,7 @@ class AddGenderToUser extends Migration
      public function down()
      {
          Schema::table('users', function($table) {
-           $table->dropColumn('gender')();
+           $table->dropColumn('gender');
          });
      }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UserTableModification extends Migration
+class DropGenderAddSocialMediaToUser extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,8 @@ class UserTableModification extends Migration
     public function up()
     {
         Schema::table('users', function($table) {
-          $table->string('password')->nullable()->change();
-          $table->string('avatar')->nullable();
-          $table->string('provider');
-          $table->string('provider_id')->unique();
+          $table->dropColumn('gender');
+          $table->string('social_media_data', 1000)->nullable();
         });
     }
 
@@ -29,10 +27,8 @@ class UserTableModification extends Migration
     public function down()
     {
         Schema::table('users', function($table) {
-          $table->string('password')->change();
-          $table->dropColumn('avatar');
-          $table->dropColumn('provider');
-          $table->dropColumn('provider_id');          
+          $table->dropColumn('social_media_data');
+          $table->string('gender')->nullable();
         });
     }
 }
